@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRAMZ BG 1.0</title>
+
+<style>
+*{box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{margin:0;background:radial-gradient(circle at top,#2a0616,#050104);color:#fff}
+.page{display:none;padding-bottom:90px}
+.active{display:block}
+
+/* GLOW */
+@keyframes glow{
+  0%{box-shadow:0 0 10px #ff4d8d}
+  50%{box-shadow:0 0 25px #b000ff}
+  100%{box-shadow:0 0 10px #ff4d8d}
+}
+
+/* CENTER */
+.center{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* CARD */
+.card{
+  width:92%;
+  max-width:380px;
+  background:#16040c;
+  border-radius:20px;
+  overflow:hidden;
+  animation:glow 3s infinite;
+}
+.card video{width:100%;height:220px;object-fit:cover}
+.card-body{padding:20px;text-align:center}
+
+/* INPUT */
+input,select{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:none;
+  border-radius:14px;
+  background:#250712;
+  color:#fff;
+}
+
+/* BUTTON */
+.btn{
+  margin-top:15px;
+  padding:14px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#ff4d8d,#b000ff);
+  font-weight:bold;
+  text-align:center;
+}
+
+/* LOADING */
+.loading{min-height:100vh;display:flex;justify-content:center;align-items:center}
+.loading-card{
+  width:92%;max-width:420px;border-radius:20px;
+  overflow:hidden;animation:glow 3s infinite
+}
+.loading-card video{width:100%;height:240px;object-fit:cover}
+.loading-text{background:#120108;text-align:center;padding:12px;font-size:14px}
+
+/* DASHBOARD */
+.header{padding:15px;text-align:center;font-weight:bold}
+.user-card{
+  margin:15px;padding:15px;border-radius:18px;
+  background:linear-gradient(135deg,#ff4d8d,#7b1fff);
+  display:flex;align-items:center;animation:glow 4s infinite
+}
+.avatar{
+  width:55px;height:55px;border-radius:50%;
+  background:#000;margin-right:12px;border:2px solid #fff
+}
+.banner{margin:15px;border-radius:18px;overflow:hidden}
+.banner video{width:100%;height:220px;object-fit:cover}
+
+.panel{
+  margin:15px;padding:18px;background:#16040c;
+  border-radius:18px;animation:glow 5s infinite
+}
+.label{font-size:13px;opacity:.8;margin-top:10px}
+
+/* FOOTER */
+.footer{
+  position:fixed;bottom:0;left:0;width:100%;
+  background:#100107;display:none;justify-content:space-around;padding:12px 0
+}
+.footer button{background:none;border:none;color:#fff;font-size:20px}
+.show-footer{display:flex}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="page active">
+  <div class="center">
+    <div class="card">
+      <video class="vid" autoplay muted loop playsinline>
+        <source src="https://RYxinz.github.io/Bramz-bug/video.mp4">
+      </video>
+      <div class="card-body">
+        <h2>Login</h2>
+        <input id="loginUser" placeholder="Username">
+        <div class="btn" onclick="login()">LOGIN</div>
+        <div class="btn" onclick="show('register')">REGISTER</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER -->
+<div id="register" class="page">
+  <div class="center">
+    <div class="card">
+      <video class="vid" autoplay muted loop playsinline>
+        <source src="https://RYxinz.github.io/Bramz-bug/video.mp4">
+      </video>
+      <div class="card-body">
+        <h2>Register</h2>
+        <input id="regUser" placeholder="Username baru">
+        <div class="btn" onclick="register()">DAFTAR</div>
+        <div class="btn" onclick="show('login')">KEMBALI</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading" class="page">
+  <div class="loading">
+    <div class="loading-card">
+      <video id="loadVideo" class="vid" muted playsinline>
+        <source src="https://RYxinz.github.io/Bramz-bug/video.mp4">
+      </video>
+      <div class="loading-text">Loading system...</div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="page">
+  <div class="header">BRAMZ BG 1.0</div>
+
+  <div class="user-card">
+    <div class="avatar"></div>
+    <div>
+      <b id="username"></b><br>
+      <small>PREMIUM</small>
+    </div>
+  </div>
+
+  <div class="banner">
+    <video class="vid" autoplay muted loop playsinline>
+      <source src="https://RYxinz.github.io/Bramz-bug/video.mp4">
+    </video>
+  </div>
+
+  <div class="panel">
+    <h3>Kirim Target</h3>
+    <div class="label">Nomor WhatsApp</div>
+    <input id="target" placeholder="62xxxxxxxxxx">
+    <div class="label">Menu</div>
+    <select>
+      <option>FC</option>
+      <option>DLY</option>
+      <option>MTABG</option>
+      <option>CRSH</option>
+    </select>
+    <div class="btn" onclick="openWA()">CHAT</div>
+  </div>
+</div>
+
+<!-- SETTING -->
+<div id="setting" class="page">
+  <div class="header">Setting</div>
+  <div class="panel">
+    Username: <b id="username2"></b>
+    <div class="btn" onclick="logout()">LOGOUT</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div id="footer" class="footer">
+  <button onclick="goDash()">🏠</button>
+  <button onclick="openWA()">💬</button>
+  <button onclick="goSet()">⚙️</button>
+</div>
+
+<script>
+const autoText=`Hello Baby
+BRAMZ BG 1.0
+ꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾ`;
+
+function unlockAudio(){
+  document.querySelectorAll("video").forEach(v=>{
+    v.muted=false;
+    v.volume=1;
+    v.play().catch(()=>{});
+  });
+}
+
+function show(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function login(){
+  if(!loginUser.value) return alert("Isi username");
+  unlockAudio();
+  localStorage.setItem("user",loginUser.value);
+  startLoading();
+}
+
+function register(){
+  if(!regUser.value) return alert("Isi username");
+  unlockAudio();
+  localStorage.setItem("user",regUser.value);
+  startLoading();
+}
+
+function startLoading(){
+  footer.classList.remove("show-footer");
+  show("loading");
+  loadVideo.currentTime=0;
+  loadVideo.muted=false;
+  loadVideo.play();
+  loadVideo.onended=finishLogin;
+}
+
+function finishLogin(){
+  username.innerText=localStorage.getItem("user");
+  username2.innerText=localStorage.getItem("user");
+  show("dashboard");
+  footer.classList.add("show-footer");
+  unlockAudio();
+}
+
+function openWA(){
+  const n=target.value.replace(/\D/g,'');
+  if(!n) return alert("Isi nomor");
+  window.open(`https://wa.me/${n}?text=${encodeURIComponent(autoText)}`);
+}
+
+function goDash(){show("dashboard")}
+function goSet(){show("setting")}
+
+function logout(){
+  localStorage.clear();
+  footer.classList.remove("show-footer");
+  show("login");
+}
+</script>
+
+</body>
+</html>
